@@ -109,11 +109,11 @@ pub fn build(b: *std.Build) void {
     }
 
     if (target.isDarwin() or target.abi == std.Target.Abi.android or target.isLinux()) {
-        lib.addCSourceFile("vendor/src/unix/proctitle.c", &.{});
+        lib.addCSourceFile(.{ .file = .{ .path = "vendor/src/unix/proctitle.c" }, .flags = &.{} });
     }
 
     if (target.isDragonFlyBSD() or target.isFreeBSD()) {
-        lib.addCSourceFile("vendor/src/unix/freebsd.c", &.{});
+        lib.addCSourceFile(.{ .file = .{ .path = "vendor/src/unix/freebsd.c" }, .flags = &.{} });
     }
 
     if (target.isDragonFlyBSD() or target.isFreeBSD() or target.isNetBSD() or target.isOpenBSD()) {
@@ -131,11 +131,11 @@ pub fn build(b: *std.Build) void {
     }
 
     if (target.isFreeBSD()) {
-        lib.addCSourceFile("vendor/src/unix/random-getrandom.c", &.{});
+        lib.addCSourceFile(.{ .file = .{ .path = "vendor/src/unix/random-getrandom.c" }, .flags = &.{} });
     }
 
     if (target.isOpenBSD()) {
-        lib.addCSourceFile("vendor/src/unix/random-getentropy.c", &.{});
+        lib.addCSourceFile(.{ .file = .{ .path = "vendor/src/unix/random-getentropy.c" }, .flags = &.{} });
     }
 
     if (target.isDarwin()) {
@@ -171,11 +171,11 @@ pub fn build(b: *std.Build) void {
 
     if (target.isNetBSD()) {
         lib.linkSystemLibrary("kvm");
-        lib.addCSourceFile("vendor/src/unix/netbsd.c", &.{});
+        lib.addCSourceFile(.{ .file = .{ .path = "vendor/src/unix/netbsd.c" }, .flags = &.{} });
     }
 
     if (target.isOpenBSD()) {
-        lib.addCSourceFile("vendor/src/unix/openbsd.c", &.{});
+        lib.addCSourceFile(.{ .file = .{ .path = "vendor/src/unix/openbsd.c" }, .flags = &.{} });
     }
 
     if (target.os_tag == std.Target.Os.Tag.solaris) {
@@ -216,8 +216,8 @@ pub fn build(b: *std.Build) void {
         }, &.{});
     }
 
-    lib.addIncludePath("vendor/src");
-    lib.addIncludePath("vendor/include");
+    lib.addIncludePath(.{ .path = "vendor/src" });
+    lib.addIncludePath(.{ .path = "vendor/include" });
     lib.installHeadersDirectory("vendor/include", "");
 
     b.installArtifact(lib);
